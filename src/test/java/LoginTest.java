@@ -1,0 +1,30 @@
+import io.github.bonigarcia.wdm.WebDriverManager; // Sets up ChromeDriver
+import org.junit.jupiter.api.*; // Make code test by @Test, @BeforeEach, @AfterEach
+import org.openqa.selenium.WebDriver; // Browser controller
+import org.openqa.selenium.chrome.ChromeDriver; // Chrome browser
+
+import static org.junit.jupiter.api.Assertions.*; // Gives assertTrue()
+
+public class LoginTest { // 1st class, container for tests
+
+    WebDriver driver; // Variable, browser, Chrome remote control
+
+    @BeforeEach
+    void setUp() { // Runs before every test
+        WebDriverManager.chromedriver().setup(); // Download and sets up Chrome, can't open Chrome without
+        driver = new ChromeDriver(); // Opens a new Chrome browser, tests can control
+    }
+
+    @Test // JUnit knows to test
+    void testGoogleTitle() { // The test
+        driver.get("https://www.google.com"); // Opens 'Google', like typing in browser
+        String title = driver.getTitle(); // Gets age title 'Google'
+
+        assertTrue(title.contains("Google")); // Checks, if the title contains 'Google' it passes, otherwise fail
+    }
+
+    @AfterEach
+    void tearDown() { // Runs after every test
+        driver.quit(); // Closes browser 'Chrome'
+    }
+}
