@@ -27,16 +27,25 @@ public class LoginTest { // 1st class, container for tests
 
     @Test
     void testValidLogin() {
+        // Open login page
         driver.get("https://the-internet.herokuapp.com/login");
-        WebElement username = driver.findElement(By.id("username"));
-        username.sendKeys("tomsmith");
 
-        WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys("SuperSecretPassword!");
+        WebElement username = driver.findElement(By.id("username")); // Find username field
+        username.sendKeys("tomsmith"); // Enter text
+
+        WebElement password = driver.findElement(By.id("password")); // Find password field
+        password.sendKeys("SuperSecretPassword!"); // Enter password
+
+        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']")); // Find button written 'Submit'
+        loginButton.click(); // Click 'Submit' button
+
+        WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
+        assertTrue(successMessage.getText().contains("Login successful!"));
     }
 
     @AfterEach
     void tearDown() { // Runs after every test
+
         driver.quit(); // Closes browser 'Chrome'
     }
 }
