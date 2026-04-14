@@ -14,7 +14,10 @@ public class LoginTest { // 1st class, container for tests
     @BeforeEach
     void setUp() { // Runs before every test
         WebDriverManager.chromedriver().setup(); // Download and sets up Chrome, can't open Chrome without
-        driver = new ChromeDriver(); // Opens a new Chrome browser that tests can control
+        driver = new ChromeDriver();// Opens a new Chrome browser that tests can control
+        driver.manage().window().maximize();
+
+        driver.manage() .timeouts() .implicitlyWait(java.time.Duration.ofSeconds(5));
     }
 
     @Test // JUnit knows to test
@@ -30,7 +33,7 @@ public class LoginTest { // 1st class, container for tests
         // Open login page
         driver.get("https://the-internet.herokuapp.com/login");
 
-        WebElement username = driver.findElement(By.id("username")); // Find username field
+        WebElement username = driver.findElement(By.id("username")); // Find username element using its HTML id.
         username.sendKeys("tomsmith"); // Enter text
 
         WebElement password = driver.findElement(By.id("password")); // Find password field
@@ -40,7 +43,9 @@ public class LoginTest { // 1st class, container for tests
         loginButton.click(); // Click 'Submit' button
 
         WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
-        assertTrue(successMessage.getText().contains("Login successful!"));
+
+        //System.out.println(successMessage.getText());
+        assertTrue(successMessage.getText().contains("secure area!"));
     }
 
     @AfterEach
