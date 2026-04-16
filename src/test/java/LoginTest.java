@@ -28,6 +28,7 @@ public class LoginTest { // 1st class, container for tests
         assertTrue(title.contains("Google")); // Checks, if the title contains 'Google' it passes, otherwise fail
     }
 
+    // Positive test
     @Test
     void testValidLogin() {
         // Open login page
@@ -45,7 +46,22 @@ public class LoginTest { // 1st class, container for tests
         WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
 
         //System.out.println(successMessage.getText());
+
         assertTrue(successMessage.getText().contains("secure area!"));
+    }
+    // Negative test
+    @Test
+    void testInvalidLogin() {
+        driver.get("https://the-internet.herokuapp.com/login");
+
+        driver.findElement(By.id("username")).sendKeys("tomsmith");
+        driver.findElement(By.id("password")).sendKeys("WrongPassword!");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        WebElement successMessage = driver.findElement(By.id("flash"));
+
+        System.out.println(successMessage.getText());
+
+        assertTrue(successMessage.getText().contains("Your Password is invalid"));
     }
 
     @AfterEach
