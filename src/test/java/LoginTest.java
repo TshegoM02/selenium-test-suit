@@ -57,11 +57,11 @@ public class LoginTest { // 1st class, container for tests
         driver.findElement(By.id("username")).sendKeys("tomsmith");
         driver.findElement(By.id("password")).sendKeys("WrongPassword!");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
-        WebElement successMessage = driver.findElement(By.id("flash"));
+        WebElement errorMessage = driver.findElement(By.id("flash"));
 
-        System.out.println(successMessage.getText());
+        System.out.println(errorMessage.getText());
 
-        assertTrue(successMessage.getText().contains("Your Password is invalid"));
+        assertTrue(errorMessage.getText().contains("Your Password is invalid"));
     }
 
     @AfterEach
