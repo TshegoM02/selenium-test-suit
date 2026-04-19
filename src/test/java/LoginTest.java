@@ -59,9 +59,9 @@ public class LoginTest { // 1st class, container for tests
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         WebElement errorMessage = driver.findElement(By.id("flash"));
 
-        System.out.println(errorMessage.getText());
+        //System.out.println(errorMessage.getText());
 
-        assertTrue(errorMessage.getText().contains("Your Password is invalid"));
+        assertTrue(errorMessage.getText().contains("Your password is invalid!"));
     }
 
     @AfterEach
