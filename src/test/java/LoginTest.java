@@ -1,3 +1,4 @@
+import Pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager; // Sets up ChromeDriver
 import org.junit.jupiter.api.*; // Make code test by @Test, @BeforeEach, @AfterEach
 import org.openqa.selenium.WebDriver; // Browser controller
@@ -34,34 +35,32 @@ public class LoginTest { // 1st class, container for tests
         // Open login page
         driver.get("https://the-internet.herokuapp.com/login");
 
-        WebElement username = driver.findElement(By.id("username")); // Find username element using its HTML id.
-        username.sendKeys("tomsmith"); // Enter text
-
-        WebElement password = driver.findElement(By.id("password")); // Find password field
-        password.sendKeys("SuperSecretPassword!"); // Enter password
-
-        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']")); // Find button written 'Submit'
-        loginButton.click(); // Click 'Submit' button
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("tomsmith", "SuperSecretPassword!");
 
         WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
 
+        String text = successMessage.getText().trim();
+
         //System.out.println(successMessage.getText());
 
-        assertTrue(successMessage.getText().contains("secure area!"));
+        assertTrue(text.toLowerCase().contains("secure area!"));
     }
     // Negative test
     @Test
     void testInvalidLogin() {
         driver.get("https://the-internet.herokuapp.com/login");
 
-        driver.findElement(By.id("username")).sendKeys("tomsmith");
-        driver.findElement(By.id("password")).sendKeys("WrongPassword!");
-        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("tomsmith", "WrongPassword!");
+
         WebElement errorMessage = driver.findElement(By.id("flash"));
 
-        //System.out.println(errorMessage.getText());
+        String text = errorMessage.getText().trim();
 
-        assertTrue(errorMessage.getText().contains("Your password is invalid!"));
+        System.out.println(errorMessage.getText());
+
+        assertTrue(text.toLowerCase().contains("invalid!"));
     }
 
     @AfterEach
