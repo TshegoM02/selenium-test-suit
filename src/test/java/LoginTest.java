@@ -35,7 +35,7 @@ public class LoginTest { // 1st class, container for tests
         // Open login page
         driver.get("https://the-internet.herokuapp.com/login");
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver); // Create a login page object and give it the browser to use
         loginPage.login("tomsmith", "SuperSecretPassword!");
 
         WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
@@ -56,11 +56,12 @@ public class LoginTest { // 1st class, container for tests
 
         WebElement errorMessage = driver.findElement(By.id("flash"));
 
-        String text = errorMessage.getText().trim();
+        String text = errorMessage.getText().trim(); // The message = error message, visibly appear, remove spaces/newlines
 
         System.out.println(errorMessage.getText());
 
-        assertTrue(text.toLowerCase().contains("invalid!"));
+        // Check the message includes 'invalid'
+        assertTrue(text.toLowerCase().contains("invalid!")); // Ignore uppercase/lowercase difference
     }
 
     @AfterEach
