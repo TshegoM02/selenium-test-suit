@@ -16,8 +16,8 @@ public class LoginTest { // 1st class, container for tests
     void setUp() { // Runs before every test
         WebDriverManager.chromedriver().setup(); // Download and sets up Chrome, can't open Chrome without
         driver = new ChromeDriver();// Opens a new Chrome browser that tests can control
-        driver.manage().window().maximize();
-
+        driver.manage().window().maximize(); // Makes the browser full screen
+        // If selenium can't find an element, wait up t 5 secs before throwing error
         driver.manage() .timeouts() .implicitlyWait(java.time.Duration.ofSeconds(5));
     }
 
@@ -38,9 +38,7 @@ public class LoginTest { // 1st class, container for tests
         LoginPage loginPage = new LoginPage(driver); // Create a login page object and give it the browser to use
         loginPage.login("tomsmith", "SuperSecretPassword!");
 
-        WebElement successMessage = driver.findElement(By.id("flash")); // Verify success message
-
-        String text = successMessage.getText().trim();
+        String text = loginPage.getMessageText();
 
         //System.out.println(successMessage.getText());
 
@@ -54,11 +52,9 @@ public class LoginTest { // 1st class, container for tests
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("tomsmith", "WrongPassword!");
 
-        WebElement errorMessage = driver.findElement(By.id("flash"));
+        String text = loginPage.getMessageText(); // The message = error message, visibly appear, remove spaces/newlines
 
-        String text = errorMessage.getText().trim(); // The message = error message, visibly appear, remove spaces/newlines
-
-        System.out.println(errorMessage.getText());
+        //System.out.println(errorMessage.getText());
 
         // Check the message includes 'invalid'
         assertTrue(text.toLowerCase().contains("invalid!")); // Ignore uppercase/lowercase difference
