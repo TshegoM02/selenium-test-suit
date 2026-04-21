@@ -24,7 +24,7 @@ public class LoginTest { // 1st class, container for tests
     @Test // JUnit knows to test
     void testGoogleTitle() { // The test
         driver.get("https://www.google.com"); // Opens 'Google', like typing in browser
-        String title = driver.getTitle(); // Gets age title 'Google'
+        String title = driver.getTitle(); // Gets page title 'Google'
 
         assertTrue(title.contains("Google")); // Checks, if the title contains 'Google' it passes, otherwise fail
     }
